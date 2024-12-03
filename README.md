@@ -1,0 +1,3 @@
+- IFruit: 目標 Interface & 相關實作（Apple, Orange, Banana）
+- IFruitFactory: 示範用 Factory, 注入 IEnumerable<IFruit> 並用 FirstOrDefault 取得指定實作
+- Startup: 在 ConfigureServices 註冊 IFruit 及 IFruitFactory 的實作
