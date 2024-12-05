@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,34 +7,22 @@ namespace Demo.DotnetCore.DI.MultipleImplementationsFactory
 {
     public interface IFruitFactory
     {
-        IFruit<TColor> GetFruit<TColor>();
+        IFruit<TColor> GetFruit<TColor>() where TColor : IColor;
     }
     
     public class FruitFactory : IFruitFactory
     {
-        private readonly IFruit<Red> _redFruit;
-        private readonly IFruit<Yellow> _yellowFruit;
-        private readonly IFruit<Blue> _blueFruit;
+        private readonly IEnumerable<IFruit> _fruits;
 
         public FruitFactory(
-            IFruit<Red> redFruit, 
-            IFruit<Yellow> yellowFruit, 
-            IFruit<Blue> blueFruit)
+            IEnumerable<IFruit> fruits)
         {
-            _redFruit = redFruit;
-            _yellowFruit = yellowFruit;
-            _blueFruit = blueFruit;
+            _fruits = fruits;
         }
         
-        public IFruit<TColor> GetFruit<TColor>()
+        public IFruit<TColor> GetFruit<TColor>() where TColor : IColor
         {
-            return typeof(TColor) switch
-            {
-                var type when type == typeof(Red) => (IFruit<TColor>)_redFruit,
-                var type when type == typeof(Yellow) => (IFruit<TColor>)_yellowFruit,
-                var type when type == typeof(Blue) => (IFruit<TColor>)_blueFruit,
-                _ => throw new ArgumentOutOfRangeException(nameof(TColor))
-            };
+            return _fruits.OfType<IFruit<TColor>>().FirstOrDefault();
         }
     }
 }

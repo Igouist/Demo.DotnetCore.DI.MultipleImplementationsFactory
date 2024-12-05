@@ -31,9 +31,15 @@ namespace Demo.DotnetCore.DI.MultipleImplementationsFactory
             services.AddTransient<IColor, Yellow>();
             services.AddTransient<IColor, Blue>();
             
+            // 先各自註冊每個實作對應的介面，確保各自可以獨立使用
             services.AddTransient<IFruit<Red>, Apple>();
             services.AddTransient<IFruit<Yellow>, Banana>();
             services.AddTransient<IFruit<Blue>, Huckleberry>();
+            
+            // 再透過泛型把所有實作註冊到同一組最上層的介面，方便後續一起使用
+            services.AddTransient<IFruit>(sp => sp.GetRequiredService<IFruit<Red>>());
+            services.AddTransient<IFruit>(sp => sp.GetRequiredService<IFruit<Yellow>>());
+            services.AddTransient<IFruit>(sp => sp.GetRequiredService<IFruit<Blue>>());
             
             services.AddSingleton<IFruitFactory, FruitFactory>();
         }
