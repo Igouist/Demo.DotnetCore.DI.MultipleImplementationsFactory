@@ -27,9 +27,13 @@ namespace Demo.DotnetCore.DI.MultipleImplementationsFactory
         {
             services.AddControllers();
             
-            services.AddTransient<IFruit, Apple>();
-            services.AddTransient<IFruit, Orange>();
-            services.AddTransient<IFruit, Banana>();
+            services.AddTransient<IColor, Red>();
+            services.AddTransient<IColor, Yellow>();
+            services.AddTransient<IColor, Blue>();
+            
+            services.AddTransient<IFruit<Red>, Apple>();
+            services.AddTransient<IFruit<Yellow>, Banana>();
+            services.AddTransient<IFruit<Blue>, Huckleberry>();
             
             services.AddSingleton<IFruitFactory, FruitFactory>();
         }

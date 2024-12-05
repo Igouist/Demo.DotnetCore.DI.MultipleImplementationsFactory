@@ -15,9 +15,9 @@ namespace Demo.DotnetCore.DI.MultipleImplementationsFactory.Controllers
         }
 
         [HttpGet("Fruit")]
-        public string Get([FromQuery] string name)
+        public string Get()
         {
-            var fruit = _fruitFactory.GetFruit(name);
+            var fruit = _fruitFactory.GetFruit<Red>();
             
             return fruit != null 
                 ? $"Name: {fruit.Name}, Color: {fruit.Color}" 

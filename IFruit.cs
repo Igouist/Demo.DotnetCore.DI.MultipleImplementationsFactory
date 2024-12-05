@@ -1,26 +1,27 @@
 ﻿namespace Demo.DotnetCore.DI.MultipleImplementationsFactory
 {
-    public interface IFruit
+    public interface IFruit<TColor>
     {
         string Name { get; }
         string Color { get; }
     }
     
-    public class Apple : IFruit
+    public class Apple : IFruit<Red>
     {
         public string Name => "Apple";
         public string Color => "Red";
     }
     
-    public class Orange : IFruit
-    {
-        public string Name => "Orange";
-        public string Color => "Orange";
-    }
-    
-    public class Banana : IFruit
+    public class Banana : IFruit<Yellow>
     {
         public string Name => "Banana";
         public string Color => "Yellow";
     }
+    
+    public class Huckleberry : IFruit<Blue>
+    {
+        public string Name => "Huckleberry";
+        public string Color => "Blue";
+    }
+    
 }
